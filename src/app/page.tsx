@@ -15,8 +15,6 @@ const scenes = [
 ];
 
 const MAX_POSITION = scenes.length - 1;
-const processStops = ['Anmeldung', 'Theorie', 'Praxis', 'Prüfung', 'Führerschein'];
-
 export default function Home() {
   const [position, setPosition] = useState(0);
   const positionRef = useRef(0);
@@ -105,9 +103,6 @@ export default function Home() {
   const index = Math.round(position);
   const roadOffset = position * 760;
   const wheelRotation = position * 1440;
-  const journeyProgress = Math.min(1, Math.max(0, position / MAX_POSITION));
-  const processIndex = Math.min(processStops.length - 1, Math.floor(journeyProgress * processStops.length));
-
   const isFinal = index === scenes.length - 1;
 
   return (
@@ -126,18 +121,6 @@ export default function Home() {
         </nav>
         <a className="nav-cta" href="tel:020373839888">Jetzt anmelden</a>
       </header>
-
-      <div className="journey-status" aria-hidden="true">
-        <span className="journey-label">Dein Weg</span>
-        <div className="journey-track">
-          {processStops.map((stop, i) => (
-            <div key={stop} className={`journey-stop ${i <= processIndex ? 'done' : ''} ${i === processIndex ? 'current' : ''}`}>
-              <i />
-              <span>{stop}</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="viewport">
         <div className="scene-track" style={{ transform: `translate3d(-${position * 100}vw,0,0)` }}>
